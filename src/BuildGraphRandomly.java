@@ -4,7 +4,6 @@ public class BuildGraphRandomly {
     public Node[][] buildGraphRandomly(int x, int y) {
         Random rand = new Random();
 
-
         Node[][] nodes = new Node[x][y];
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
@@ -28,7 +27,6 @@ public class BuildGraphRandomly {
                 while( randomColPos == j){
                     randomColPos = rand.nextInt(y-1);
                 }
-
                 nodes[i][j].connectedNodes.add(nodes[i+1][randomColPos]);
                 nodes[i][j].costs.add(rand.nextInt(100));
             }
