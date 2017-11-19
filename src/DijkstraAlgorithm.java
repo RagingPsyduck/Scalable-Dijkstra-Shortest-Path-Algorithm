@@ -42,7 +42,10 @@ public class DijkstraAlgorithm {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Node cur = queue.poll();
+                int cost = distMap.get(cur);
                 Node rightNode = cur.right;
+                int rightCost = cur.rightCost;
+
 
 
                 Node downNode = cur.down;
