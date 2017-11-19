@@ -22,8 +22,10 @@ public class BuildGraphRandomly {
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
+                if( rand.nextInt(10) > 2 ) continue;
                 if (i == x - 1) continue;
-                int randomColPos = rand.nextInt(y-1);
+                int randomColPos = y - 3 + rand.nextInt(6);
+                if(randomColPos >= y ) continue;
                 while( randomColPos == j){
                     randomColPos = rand.nextInt(y-1);
                 }

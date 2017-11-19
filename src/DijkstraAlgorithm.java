@@ -31,11 +31,10 @@ public class DijkstraAlgorithm {
         }
     }
 
-
     public int bfs(Node[][] nodes) {
         Set<Node> isVisited = new HashSet<>();
         Node startNode = nodes[0][0];
-        Node endNode = nodes[row-1][col - 1];
+        Node endNode = nodes[row - 1][col - 1];
 
         Queue<Node> queue = new LinkedList<>();
         queue.offer(startNode);
@@ -47,7 +46,8 @@ public class DijkstraAlgorithm {
             int curCost = distMap.get(cur);
             List<Node> connectedNodes = cur.connectedNodes;
             List<Integer> costs = cur.costs;
-            for (int i = 0; i < connectedNodes.size(); i++) {
+            int size  = connectedNodes.size();
+            for (int i = 0; i < size; i++) {
                 Node tempNode = connectedNodes.get(i);
                 int tempCost = costs.get(i);
                 updateDistanceMap(distMap, tempNode, tempCost + curCost);
