@@ -8,7 +8,7 @@ public class Node {
     int downRightCost;
     Node right;
     Node down;
-    List<Node> diagonal = new ArrayList<>();
+    Node diagonal;
 
     Random rand = new Random();
 

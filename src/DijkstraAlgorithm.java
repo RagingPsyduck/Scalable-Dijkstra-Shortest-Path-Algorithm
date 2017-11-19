@@ -49,7 +49,7 @@ public class DijkstraAlgorithm {
 
 
                 Node downNode = cur.down;
-                List<Node> diagonalNodes = cur.diagonal;
+                Node diagonalNodes = cur.diagonal;
             }
         }
 
