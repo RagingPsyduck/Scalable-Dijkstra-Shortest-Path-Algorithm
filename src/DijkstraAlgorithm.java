@@ -50,16 +50,16 @@ public class DijkstraAlgorithm {
             for (int i = 0; i < size; i++) {
                 Node tempNode = connectedNodes.get(i);
                 int tempCost = costs.get(i);
-                updateDistanceMap(distMap, tempNode, tempCost + curCost);
-                queue.add(tempNode);
+                updateDistanceMap(distMap, tempNode, tempCost + curCost,queue);
             }
         }
         return distMap.get(endNode);
     }
 
-    public void updateDistanceMap(Map<Node, Integer> distMap, Node node, int cost) {
+    public void updateDistanceMap(Map<Node, Integer> distMap, Node node, int cost,Queue<Node> queue) {
         if (distMap.get(node) > cost) {
             distMap.put(node, cost);
+            queue.add(node);
         }
     }
 

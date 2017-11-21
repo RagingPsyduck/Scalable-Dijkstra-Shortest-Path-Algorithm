@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         BuildGraphRandomly buildGraphNodes = new BuildGraphRandomly();
-        Node[][] nodes = buildGraphNodes.buildGraphRandomly(10, 10);
+        Node[][] nodes = buildGraphNodes.buildGraphRandomly(30, 10);
 
         DijkstraAlgorithm pathPlan = new DijkstraAlgorithm();
         pathPlan.initPathPlanning(nodes);
@@ -11,10 +11,8 @@ public class Main {
         long endTime   = System.nanoTime();
 
         long totalTime = endTime - startTime;
-        System.out.print("Time " + totalTime/1000000);
-
+        System.out.print("Time " + totalTime/1000  + " cost " + minSteps );
     }
-
 }
 
 
