@@ -6,8 +6,6 @@ public class Node {
     List<Node> connectedNodes;
 
 
-    Random rand = new Random();
-
     Node(int x) {
         id = x;
         costs = new ArrayList<>();

@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class DijkstraAlgorithm {
+public class DijkstraAlgorithm extends Thread{
     Map<Node, Integer> distMap = new HashMap<>();
     int row;
     int col;
@@ -31,10 +31,10 @@ public class DijkstraAlgorithm {
         }
     }
 
-    public int bfs(Node[][] nodes) {
+    public int bfs(Node[][] nodes,int startX ,int startY, int endLine) {
         Set<Node> isVisited = new HashSet<>();
-        Node startNode = nodes[0][0];
-        Node endNode = nodes[row - 1][col - 1];
+        Node startNode = nodes[startX][startY];
+        Node endNode = nodes[endLine][col - 1];
 
         Queue<Node> queue = new LinkedList<>();
         queue.offer(startNode);
