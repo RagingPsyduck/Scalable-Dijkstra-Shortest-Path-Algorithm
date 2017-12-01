@@ -31,7 +31,7 @@ public class DijkstraAlgorithm extends Thread{
         }
     }
 
-    public int bfs(Node[][] nodes,int startX ,int startY, int endLine) {
+    public Index bfs(Node[][] nodes,int startX ,int startY, int endLine) {
         Set<Node> isVisited = new HashSet<>();
         Node startNode = nodes[startX][startY];
         Node endNode = nodes[endLine][col - 1];
@@ -53,7 +53,13 @@ public class DijkstraAlgorithm extends Thread{
                 updateDistanceMap(distMap, tempNode, tempCost + curCost,queue);
             }
         }
-        return distMap.get(endNode);
+
+//        for (Map.Entry<Node, Integer> entry : distMap.entrySet()){
+//            System.out.print(" Id is " + entry.getKey().id);
+//            System.out.print("; Cost is " + entry.getValue());
+//        }
+        //return distMap.get(endNode);
+        return new Index(distMap.get(endNode),distMap);
     }
 
     public void updateDistanceMap(Map<Node, Integer> distMap, Node node, int cost,Queue<Node> queue) {
@@ -64,3 +70,15 @@ public class DijkstraAlgorithm extends Thread{
     }
 
 }
+
+class Index {
+    int cost;
+    Map<Node,Integer> map;
+
+
+    Index(int x, Map<Node,Integer> distMap) {
+        cost = x;
+        map = distMap;
+    }
+}
+

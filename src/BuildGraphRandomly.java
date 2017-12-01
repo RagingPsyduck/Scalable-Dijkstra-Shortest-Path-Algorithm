@@ -7,7 +7,7 @@ public class BuildGraphRandomly {
         Node[][] nodes = new Node[x][y];
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                int id = i * x + j;
+                int id = i * y + j;
                 nodes[i][j] = new Node(id);
                 if (j != 0) {
                     nodes[i][j - 1].connectedNodes.add(nodes[i][j]);
