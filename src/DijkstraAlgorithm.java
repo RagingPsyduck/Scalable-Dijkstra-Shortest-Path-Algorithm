@@ -53,12 +53,7 @@ public class DijkstraAlgorithm extends Thread{
                 updateDistanceMap(distMap, tempNode, tempCost + curCost,queue);
             }
         }
-
-//        for (Map.Entry<Node, Integer> entry : distMap.entrySet()){
-//            System.out.print(" Id is " + entry.getKey().id);
-//            System.out.print("; Cost is " + entry.getValue());
-//        }
-        //return distMap.get(endNode);
+        
         return new Index(distMap.get(endNode),distMap);
     }
 
