@@ -44,16 +44,16 @@ public class DijkstraAlgorithm extends Thread{
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
             int curCost = distMap.get(cur);
-            List<Node> connectedNodes = cur.connectedNodes;
-            List<Integer> costs = cur.costs;
-            int size  = connectedNodes.size();
+            List<Edge> edges = cur.edges;
+
+            int size  = edges.size();
             for (int i = 0; i < size; i++) {
-                Node tempNode = connectedNodes.get(i);
-                int tempCost = costs.get(i);
+                Node tempNode = edges.get(i).nextNode;
+                int tempCost = edges.get(i).cost;
                 updateDistanceMap(distMap, tempNode, tempCost + curCost,queue);
             }
         }
-        
+
         return new Index(distMap.get(endNode),distMap);
     }
 
