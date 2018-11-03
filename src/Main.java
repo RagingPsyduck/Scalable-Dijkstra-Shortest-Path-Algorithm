@@ -4,72 +4,143 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         BuildGraphRandomly buildGraphNodes = new BuildGraphRandomly();
-        Node[][] nodes = buildGraphNodes.buildGraphRandomly(200, 10);
+        Node[][] nodes = buildGraphNodes.buildGraphRandomly(200, 20);
 
-        System.out.println("One process");
+        // One process
         DijkstraAlgorithm pathPlan = new DijkstraAlgorithm();
         pathPlan.initPathPlanning(nodes);
         long startTime = System.nanoTime();
-        int minCost = pathPlan.bfs(nodes, 0, 0, nodes[0].length - 1).cost;
+        int minCost = pathPlan.bfs(nodes, 0, 0, nodes.length - 1).cost;
         long endTime = System.nanoTime();
-
         long totalTime = endTime - startTime;
-        System.out.println("Time " + totalTime / 1000 + " cost " + minCost);
+        System.out.println("One process Time " + totalTime / 1000 + " cost " + minCost);
 
-
-        System.out.println("Two processes");
-        DijkstraAlgorithm threadOne = new DijkstraAlgorithm();
-        threadOne.start();
-
+        // Two processes
+        System.out.println("--------------------------");
+        DijkstraAlgorithm algo = new DijkstraAlgorithm();
+        algo.start();
 
         startTime = System.nanoTime();
         int[] costParser = new int[nodes[0].length];
-        Map<Node,Integer> tempMap = new HashMap<>();
-        System.out.println("Process one");
-        synchronized (threadOne) {
+        Map<Node, Integer> tempMap = new HashMap<>();
+        synchronized (algo) {
             try {
-                threadOne.initPathPlanning(nodes);
-                Index index = pathPlan.bfs(nodes, 0, 0, nodes[0].length / 2 - 1);
+                algo.initPathPlanning(nodes);
+                Index index = pathPlan.bfs(nodes, 0, 0, nodes.length / 2 - 1);
                 minCost = index.cost;
-                tempMap =  index.map;
-                threadOne.wait();
-
+                tempMap = index.map;
+                algo.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             for (int i = 0; i < nodes[0].length; i++) {
-                Node temp = nodes[nodes[0].length / 2 - 1][i];
+                Node temp = nodes[nodes.length / 2 - 1][i];
                 costParser[i] = tempMap.get(temp);
             }
         }
 
         endTime = System.nanoTime();
         totalTime = endTime - startTime;
-        System.out.println("Time " + totalTime / 1000 + " cost " + minCost);
+        System.out.println("Process one Time " + totalTime / 1000 + " cost " + minCost);
 
-        System.out.println("Process Two");
 
-        DijkstraAlgorithm threadTwo = new DijkstraAlgorithm();
-        threadTwo.start();
         startTime = System.nanoTime();
         int res = Integer.MAX_VALUE;
-        synchronized (threadTwo) {
-            try {
-                threadTwo.initPathPlanning(nodes);
-                for (int i = 0; i < nodes[0].length; i++) {
-                    int temp = pathPlan.bfs(nodes, nodes[0].length / 2 - 1, i, nodes[0].length - 1).cost;
-                    //System.out.println("temp and cost parser " + temp + " " + costParser[i]);
-                    res = Math.min(res, temp + costParser[i]);
-                }
-                threadTwo.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        synchronized (algo) {
+            int startX = nodes.length / 2 - 1;
+            for (int i = 0; i < nodes[0].length; i++) {
+                int temp = pathPlan.bfs(nodes, startX, i, nodes.length - 1).cost;
+                res = Math.min(res, temp + costParser[i]);
             }
         }
 
         endTime = System.nanoTime();
         totalTime = endTime - startTime;
-        System.out.println("Time " + totalTime / 1000 + " cost " + res);
+        System.out.println("Process Two Time " + totalTime / 1000 + " cost " + res);
+
+        // Four processes
+//        System.out.println("--------------------------");
+//        DijkstraAlgorithm algo = new DijkstraAlgorithm();
+//        startTime = System.nanoTime();
+//        int[] costParser = new int[nodes[0].length];
+//        Map<Node, Integer> tempMap;
+//
+//        synchronized (algo) {
+//            algo.initPathPlanning(nodes);
+//            Index index = pathPlan.bfs(nodes, 0, 0, nodes.length / 4);
+//            tempMap = index.map;
+//            for (int i = 0; i < nodes[0].length; i++) {
+//                Node temp = nodes[nodes.length / 4 - 1][i];
+//                costParser[i] = tempMap.get(temp);
+//            }
+//        }
+//
+//        endTime = System.nanoTime();
+//        totalTime = endTime - startTime;
+//        System.out.println("Process one Time " + totalTime / 1000);
+//
+//        startTime = System.nanoTime();
+//        int res = Integer.MAX_VALUE;
+//        synchronized (algo) {
+//            algo.initPathPlanning(nodes);
+//            for (int i = 0; i < nodes[0].length; i++) {
+//                Index index = pathPlan.bfs(nodes, nodes.length / 4, i, nodes.length / 4 * 2);
+//                minCost = index.cost;
+//                tempMap = index.map;
+//                res = Math.min(res, minCost + costParser[i]);
+//            }
+//            for (int i = 0; i < nodes[0].length; i++) {
+//                Node temp = nodes[nodes.length / 4][i];
+//                costParser[i] = tempMap.get(temp);
+//            }
+//        }
+//
+//        endTime = System.nanoTime();
+//        totalTime = endTime - startTime;
+//        System.out.println("Process Two Time " + totalTime / 1000);
+//
+//        // Three process
+//        startTime = System.nanoTime();
+//        res = Integer.MAX_VALUE;
+//        synchronized (algo) {
+//            algo.initPathPlanning(nodes);
+//
+//            for (int i = 0; i < nodes[0].length; i++) {
+//                Index index = pathPlan.bfs(nodes, nodes.length / 4 * 2, i, nodes.length / 4 * 3);
+//                minCost = index.cost;
+//                tempMap = index.map;
+//                res = Math.min(res, minCost + costParser[i]);
+//            }
+//            for (int i = 0; i < nodes[0].length; i++) {
+//                Node temp = nodes[nodes.length / 4 * 3][i];
+//                costParser[i] = tempMap.get(temp);
+//            }
+//        }
+//
+//        endTime = System.nanoTime();
+//        totalTime = endTime - startTime;
+//        System.out.println("Process Three Time " + totalTime / 1000);
+//
+//        startTime = System.nanoTime();
+//        res = Integer.MAX_VALUE;
+//        synchronized (algo) {
+//            algo.initPathPlanning(nodes);
+//            for (int i = 0; i < nodes[0].length; i++) {
+//                Index index = pathPlan.bfs(nodes, nodes.length / 4 * 3, i, nodes.length - 1);
+//                minCost = index.cost;
+//                tempMap = index.map;
+//                res = Math.min(res, minCost + costParser[i]);
+//            }
+//            for (int i = 0; i < nodes[0].length; i++) {
+//                Node temp = nodes[nodes.length - 1][i];
+//                costParser[i] = tempMap.get(temp);
+//            }
+//        }
+//
+//        endTime = System.nanoTime();
+//        totalTime = endTime - startTime;
+//        System.out.println("Process Four Time " + totalTime / 1000);
     }
 }
 

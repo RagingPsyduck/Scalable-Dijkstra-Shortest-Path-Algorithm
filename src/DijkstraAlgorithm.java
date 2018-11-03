@@ -32,14 +32,11 @@ public class DijkstraAlgorithm extends Thread{
     }
 
     public Index bfs(Node[][] nodes,int startX ,int startY, int endLine) {
-        Set<Node> isVisited = new HashSet<>();
         Node startNode = nodes[startX][startY];
         Node endNode = nodes[endLine][col - 1];
-
         Queue<Node> queue = new LinkedList<>();
         queue.offer(startNode);
         distMap.put(startNode, 0);
-        isVisited.add(startNode);
 
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
@@ -63,5 +60,4 @@ public class DijkstraAlgorithm extends Thread{
             queue.add(node);
         }
     }
-
 }
