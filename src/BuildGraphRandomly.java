@@ -34,8 +34,8 @@ public class BuildGraphRandomly {
                 }
                 int randomValue = rand.nextInt(100);
 
-                if(rand.nextInt(10) > 2 ) nodes[i][j].edges.add(new Edge(randomValue,nodes[i + 1][randomColPos]));
-                if(rand.nextInt(10) > 2 ) nodes[i + 1][randomColPos].edges.add(new Edge(randomValue,nodes[i][j]));
+                if (rand.nextInt(10) > 2) nodes[i][j].edges.add(new Edge(randomValue, nodes[i + 1][randomColPos]));
+                if (rand.nextInt(10) > 2) nodes[i + 1][randomColPos].edges.add(new Edge(randomValue, nodes[i][j]));
 
             }
         }

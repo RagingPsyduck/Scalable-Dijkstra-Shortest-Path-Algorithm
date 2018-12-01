@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class DijkstraAlgorithm extends Thread{
+public class DijkstraAlgorithm extends Thread {
     Map<Node, Integer> distMap = new HashMap<>();
     int row;
     int col;
@@ -31,7 +31,7 @@ public class DijkstraAlgorithm extends Thread{
         }
     }
 
-    public Index bfs(Node[][] nodes,int startX ,int startY, int endLine) {
+    public Index bfs(Node[][] nodes, int startX, int startY, int endLine) {
         Node startNode = nodes[startX][startY];
         Node endNode = nodes[endLine][col - 1];
         Queue<Node> queue = new LinkedList<>();
@@ -43,18 +43,18 @@ public class DijkstraAlgorithm extends Thread{
             int curCost = distMap.get(cur);
             List<Edge> edges = cur.edges;
 
-            int size  = edges.size();
+            int size = edges.size();
             for (int i = 0; i < size; i++) {
                 Node tempNode = edges.get(i).nextNode;
                 int tempCost = edges.get(i).cost;
-                updateDistanceMap(distMap, tempNode, tempCost + curCost,queue);
+                updateDistanceMap(distMap, tempNode, tempCost + curCost, queue);
             }
         }
 
-        return new Index(distMap.get(endNode),distMap);
+        return new Index(distMap.get(endNode), distMap);
     }
 
-    public void updateDistanceMap(Map<Node, Integer> distMap, Node node, int cost,Queue<Node> queue) {
+    public void updateDistanceMap(Map<Node, Integer> distMap, Node node, int cost, Queue<Node> queue) {
         if (distMap.get(node) > cost) {
             distMap.put(node, cost);
             queue.add(node);
