@@ -31,9 +31,9 @@ public class DijkstraAlgorithm extends Thread {
         }
     }
 
-    public Index bfs(Node[][] nodes, int startX, int startY, int endLine) {
+    public Index bfs(Node[][] nodes, int startX, int startY, int endX, int endY) {
         Node startNode = nodes[startX][startY];
-        Node endNode = nodes[endLine][col - 1];
+        Node endNode = nodes[endX][endY];
         Queue<Node> queue = new LinkedList<>();
         queue.offer(startNode);
         distMap.put(startNode, 0);
