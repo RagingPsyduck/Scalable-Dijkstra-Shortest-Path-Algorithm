@@ -23,7 +23,6 @@ public class Main {
 
         startTime = System.nanoTime();
         int[] costParser = new int[nodes[0].length];
-        //Map<Node, Integer> tempMap = new HashMap<>();
         synchronized (algo) {
             try {
                 algo.initPathPlanning(nodes);
