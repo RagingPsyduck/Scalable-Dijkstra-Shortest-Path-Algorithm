@@ -4,7 +4,7 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         BuildGraphRandomly buildGraphNodes = new BuildGraphRandomly();
-        Node[][] nodes = buildGraphNodes.buildGraphRandomly(200, 20);
+        Node[][] nodes = buildGraphNodes.buildGraphRandomly(10, 10);
 
         // One process
         DijkstraAlgorithm pathPlan = new DijkstraAlgorithm();
