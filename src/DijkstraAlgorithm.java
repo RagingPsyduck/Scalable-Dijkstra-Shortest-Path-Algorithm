@@ -60,4 +60,8 @@ public class DijkstraAlgorithm extends Thread {
             queue.add(node);
         }
     }
+
+    public void cleanDistanceMap(){
+        distMap = new HashMap<>();
+    }
 }

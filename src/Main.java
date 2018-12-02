@@ -4,7 +4,7 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         BuildGraphRandomly buildGraphNodes = new BuildGraphRandomly();
-        Node[][] nodes = buildGraphNodes.buildGraphRandomly(20, 10);
+        Node[][] nodes = buildGraphNodes.buildGraphRandomly(1000, 10);
 
         // One process
         DijkstraAlgorithm pathPlan = new DijkstraAlgorithm();
@@ -34,24 +34,29 @@ public class Main {
                 e.printStackTrace();
             }
 
-
-            StringBuilder sb = new StringBuilder();
-            for (int i : costParser) {
-                sb.append(i).append(" ");
-            }
-
             endTime = System.nanoTime();
             totalTime = endTime - startTime;
-            System.out.println("Process one Time " + totalTime / 1000 + " cost " + sb.toString());
 
-            startTime = System.nanoTime();
+//            StringBuilder sb = new StringBuilder();
+//            for (int i : costParser) {
+//                sb.append(i).append(" ");
+//            }
+//            System.out.println("Process one Time " + totalTime / 1000 + " cost " + sb.toString());
+
+            System.out.println("Process one Time " + totalTime / 1000);
+
+
+
             DijkstraAlgorithm pathPlan2 = new DijkstraAlgorithm();
             pathPlan2.initPathPlanning(nodes);
-
+            
+            startTime = System.nanoTime();
             int res = Integer.MAX_VALUE;
             synchronized (algo) {
                 int startX = nodes.length / 2 - 1;
                 for (int i = 0; i < nodes[0].length; i++) {
+//                    pathPlan2.cleanDistanceMap();
+//                    pathPlan2.initPathPlanning(nodes);
                     int temp = pathPlan2.bfs(nodes, startX, i, nodes.length - 1, nodes[0].length - 1).cost;
                     res = Math.min(res, temp + costParser[i]);
                 }
