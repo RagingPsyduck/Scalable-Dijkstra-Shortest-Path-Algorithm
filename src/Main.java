@@ -45,18 +45,17 @@ public class Main {
 
             System.out.println("Process one Time " + totalTime / 1000);
 
-
-
             DijkstraAlgorithm pathPlan2 = new DijkstraAlgorithm();
             pathPlan2.initPathPlanning(nodes);
-            
+
             startTime = System.nanoTime();
+
             int res = Integer.MAX_VALUE;
             synchronized (algo) {
                 int startX = nodes.length / 2 - 1;
                 for (int i = 0; i < nodes[0].length; i++) {
-//                    pathPlan2.cleanDistanceMap();
-//                    pathPlan2.initPathPlanning(nodes);
+                    // pathPlan2.cleanDistanceMap();
+                    // pathPlan2.initPathPlanning(nodes);
                     int temp = pathPlan2.bfs(nodes, startX, i, nodes.length - 1, nodes[0].length - 1).cost;
                     res = Math.min(res, temp + costParser[i]);
                 }
@@ -66,7 +65,7 @@ public class Main {
             totalTime = endTime - startTime;
             System.out.println("Process Two Time " + totalTime / 1000 + " cost " + res);
 
-            // Four processes
+//            Four processes
 //        System.out.println("--------------------------");
 //        DijkstraAlgorithm algo = new DijkstraAlgorithm();
 //        startTime = System.nanoTime();

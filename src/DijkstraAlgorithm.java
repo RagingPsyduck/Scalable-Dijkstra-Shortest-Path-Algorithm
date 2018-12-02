@@ -4,6 +4,7 @@ import java.util.*;
 
 public class DijkstraAlgorithm extends Thread {
     Map<Node, Integer> distMap = new HashMap<>();
+    Map<Node, Integer> originalDistMap = new HashMap<>();
     int row;
     int col;
 
@@ -29,6 +30,7 @@ public class DijkstraAlgorithm extends Thread {
                 distMap.put(nodes[i][j], Integer.MAX_VALUE);
             }
         }
+        originalDistMap = new HashMap<>(distMap);
     }
 
     public Index bfs(Node[][] nodes, int startX, int startY, int endX, int endY) {
@@ -55,13 +57,13 @@ public class DijkstraAlgorithm extends Thread {
     }
 
     public void updateDistanceMap(Map<Node, Integer> distMap, Node node, int cost, Queue<Node> queue) {
-        if (distMap.get(node) > cost) {
+        if (distMap.get(node) == null || distMap.get(node) > cost ) {
             distMap.put(node, cost);
             queue.add(node);
         }
     }
 
     public void cleanDistanceMap(){
-        distMap = new HashMap<>();
+        distMap = new HashMap<>(originalDistMap);
     }
 }
