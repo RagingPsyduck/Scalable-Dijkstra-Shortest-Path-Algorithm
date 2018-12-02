@@ -56,8 +56,8 @@ public class Main {
                 for (int i = 0; i < nodes[0].length; i++) {
                     // pathPlan2.cleanDistanceMap();
                     // pathPlan2.initPathPlanning(nodes);
-                    int temp = pathPlan2.bfs(nodes, startX, i, nodes.length - 1, nodes[0].length - 1).cost;
-                    res = Math.min(res, temp + costParser[i]);
+                    int cost = pathPlan2.bfs(nodes, startX, i, nodes.length - 1, nodes[0].length - 1).cost;
+                    res = Math.min(res, cost + costParser[i]);
                 }
             }
 
@@ -65,7 +65,7 @@ public class Main {
             totalTime = endTime - startTime;
             System.out.println("Process Two Time " + totalTime / 1000 + " cost " + res);
 
-//            Four processes
+//        Four processes
 //        System.out.println("--------------------------");
 //        DijkstraAlgorithm algo = new DijkstraAlgorithm();
 //        startTime = System.nanoTime();
