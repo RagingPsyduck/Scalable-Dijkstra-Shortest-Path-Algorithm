@@ -1,13 +1,14 @@
 public class Main {
     public static void main(String[] args) {
         BuildGraphRandomly buildGraphNodes = new BuildGraphRandomly();
-        Node[][] nodes = buildGraphNodes.buildGraphRandomly(1000, 10);
+        Node[][] nodes = buildGraphNodes.buildGraphRandomly(20, 20);
         Util util = new Util();
 
         // One process
+        long startTime = System.nanoTime();
         DijkstraAlgorithm pathPlan = new DijkstraAlgorithm();
         pathPlan.initPathPlanning(nodes);
-        long startTime = System.nanoTime();
+
 
         int minCost = pathPlan.bfs(nodes, 0, 0, nodes.length - 1, nodes[0].length - 1).cost;
         long endTime = System.nanoTime();
@@ -16,20 +17,20 @@ public class Main {
 
         // Two processes
         System.out.println("--------------------------");
-
         int divideLine = nodes.length / 2;
-        DijkstraAlgorithm algo = new DijkstraAlgorithm();
-        algo.start();
-
+        util.divideMap(nodes,divideLine);
+        DijkstraAlgorithm pathPlan1 = new DijkstraAlgorithm();
+        pathPlan1.start();
         startTime = System.nanoTime();
-        int[] costParser = new int[nodes[0].length];
-        synchronized (algo) {
+        int[] costParser = new int[4];
+        synchronized (pathPlan1) {
             try {
-                algo.initPathPlanning(nodes);
-                for (int i = 0; i < nodes[0].length; i++) {
-                    costParser[i] = pathPlan.bfs(nodes, 0, 0, nodes.length / 2, i).cost;
+                pathPlan1.initPathPlanning(nodes);
+                for (int i = 0; i < costParser.length; i++) {
+                    costParser[i] = pathPlan1.bfs(nodes, 0, 0, nodes.length / 2, i).cost;
                 }
-                algo.wait();
+
+                pathPlan1.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -41,24 +42,28 @@ public class Main {
             DijkstraAlgorithm pathPlan2 = new DijkstraAlgorithm();
             pathPlan2.initPathPlanning(nodes);
 
-            util.divideMap(nodes, nodes.length / 2);
-
             startTime = System.nanoTime();
-
+            long totalCleanUpTime = 0;
             int res = Integer.MAX_VALUE;
-            synchronized (algo) {
+            synchronized (pathPlan1) {
                 int startX = nodes.length / 2;
-                for (int i = 0; i < nodes[0].length; i++) {
-//                    pathPlan2.cleanDistanceMap();
-//                    pathPlan2.initPathPlanning(nodes);
+                for (int i = 0; i < costParser.length; i++) {
+                    //long  tempStartTime = System.nanoTime();
+                    pathPlan2.cleanDistanceMap();
+                    pathPlan2.initPathPlanning(nodes);
+                    //long  tempEndTime = System.nanoTime();
+                    //totalCleanUpTime += tempEndTime - tempStartTime;
                     int cost = pathPlan2.bfs(nodes, startX, i, nodes.length - 1, nodes[0].length - 1).cost;
                     res = Math.min(res, cost + costParser[i]);
                 }
             }
 
             endTime = System.nanoTime();
-            totalTime = endTime - startTime;
+            totalTime = endTime - startTime - totalCleanUpTime;
             System.out.println("Process Two Time " + totalTime / 1000 + " cost " + res);
+        }
+    }
+}
 
 //        Four processes
 //        System.out.println("--------------------------");
@@ -142,8 +147,5 @@ public class Main {
 //        endTime = System.nanoTime();
 //        totalTime = endTime - startTime;
 //        System.out.println("Process Four Time " + totalTime / 1000);
-        }
-    }
-}
 
 

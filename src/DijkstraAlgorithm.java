@@ -57,7 +57,7 @@ public class DijkstraAlgorithm extends Thread {
     }
 
     public void updateDistanceMap(Map<Node, Integer> distMap, Node node, int cost, Queue<Node> queue) {
-        if (distMap.get(node) == null || distMap.get(node) > cost ) {
+        if (distMap.get(node) > cost ) {
             distMap.put(node, cost);
             queue.add(node);
         }
