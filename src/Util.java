@@ -19,4 +19,21 @@ public class Util {
             }
         }
     }
+
+    public void createPorts(Node[][] nodes, int lineNumber) {
+        int y = nodes[0].length;
+        for (int j = 4; j < y; j++) {
+            Node temp = nodes[lineNumber][j];
+            int id = temp.id;
+            List<Edge> edges = temp.edges;
+            for (Edge edge : edges) {
+                Node nextNode = edge.nextNode;
+                for (int i = 0; i < nextNode.edges.size(); i++) {
+                    if (nextNode.edges.get(i).nextNode.id == id) {
+                        nextNode.edges.remove(i);
+                    }
+                }
+            }
+        }
+    }
 }

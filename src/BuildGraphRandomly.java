@@ -41,22 +41,8 @@ public class BuildGraphRandomly {
             }
         }
         // Create 4 ports in the mid
-        for (int j = 4; j < y; j++) {
-            Node temp = nodes[nodes.length/2][j];
-            int id = temp.id;
-            List<Edge> edges = temp.edges;
-            for (Edge edge : edges) {
-
-                Node nextNode = edge.nextNode;
-
-                for (int i = 0; i < nextNode.edges.size(); i++) {
-                    if (nextNode.edges.get(i).nextNode.id == id) {
-                        nextNode.edges.remove(i);
-                    }
-                }
-            }
-        }
-
+        Util util = new Util();
+        util.createPorts(nodes,nodes.length/2);
 
         return nodes;
     }
