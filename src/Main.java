@@ -5,15 +5,8 @@ public class Main {
         Util util = new Util();
 
         // One process
-        long startTime = System.nanoTime();
-        DijkstraAlgorithm pathPlan = new DijkstraAlgorithm();
-        pathPlan.initPathPlanning(nodes);
-
-
-        int minCost = pathPlan.bfs(nodes, 0, 0, nodes.length - 1, nodes[0].length - 1).cost;
-        long endTime = System.nanoTime();
-        long totalTime = endTime - startTime;
-        System.out.println("One process Time " + totalTime / 1000 + " cost " + minCost);
+        OneModel oneModel = new OneModel();
+        oneModel.generatePath(nodes);
 
         // Two processes
         System.out.println("--------------------------");
@@ -21,7 +14,7 @@ public class Main {
         util.divideMap(nodes,divideLine);
         DijkstraAlgorithm pathPlan1 = new DijkstraAlgorithm();
         pathPlan1.start();
-        startTime = System.nanoTime();
+        long startTime = System.nanoTime();
         int[] costParser = new int[4];
         synchronized (pathPlan1) {
             try {
@@ -35,8 +28,8 @@ public class Main {
                 e.printStackTrace();
             }
 
-            endTime = System.nanoTime();
-            totalTime = endTime - startTime;
+            long endTime = System.nanoTime();
+            long totalTime = endTime - startTime;
 
             System.out.println("Process one Time " + totalTime / 1000);
             DijkstraAlgorithm pathPlan2 = new DijkstraAlgorithm();
