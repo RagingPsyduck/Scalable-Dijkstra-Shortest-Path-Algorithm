@@ -49,8 +49,8 @@ public class Main {
             synchronized (algo) {
                 int startX = nodes.length / 2;
                 for (int i = 0; i < nodes[0].length; i++) {
-                    pathPlan2.cleanDistanceMap();
-                    pathPlan2.initPathPlanning(nodes);
+//                    pathPlan2.cleanDistanceMap();
+//                    pathPlan2.initPathPlanning(nodes);
                     int cost = pathPlan2.bfs(nodes, startX, i, nodes.length - 1, nodes[0].length - 1).cost;
                     res = Math.min(res, cost + costParser[i]);
                 }
