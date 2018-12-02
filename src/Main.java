@@ -1,10 +1,8 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class Main {
     public static void main(String[] args) {
         BuildGraphRandomly buildGraphNodes = new BuildGraphRandomly();
         Node[][] nodes = buildGraphNodes.buildGraphRandomly(1000, 10);
+        Util util = new Util();
 
         // One process
         DijkstraAlgorithm pathPlan = new DijkstraAlgorithm();
@@ -18,6 +16,8 @@ public class Main {
 
         // Two processes
         System.out.println("--------------------------");
+
+        int divideLine = nodes.length / 2;
         DijkstraAlgorithm algo = new DijkstraAlgorithm();
         algo.start();
 
@@ -27,7 +27,7 @@ public class Main {
             try {
                 algo.initPathPlanning(nodes);
                 for (int i = 0; i < nodes[0].length; i++) {
-                    costParser[i] = pathPlan.bfs(nodes, 0, 0, nodes.length / 2 - 1, i).cost;
+                    costParser[i] = pathPlan.bfs(nodes, 0, 0, nodes.length / 2, i).cost;
                 }
                 algo.wait();
             } catch (InterruptedException e) {
@@ -37,25 +37,20 @@ public class Main {
             endTime = System.nanoTime();
             totalTime = endTime - startTime;
 
-//            StringBuilder sb = new StringBuilder();
-//            for (int i : costParser) {
-//                sb.append(i).append(" ");
-//            }
-//            System.out.println("Process one Time " + totalTime / 1000 + " cost " + sb.toString());
-
             System.out.println("Process one Time " + totalTime / 1000);
-
             DijkstraAlgorithm pathPlan2 = new DijkstraAlgorithm();
             pathPlan2.initPathPlanning(nodes);
+
+            util.divideMap(nodes, nodes.length / 2);
 
             startTime = System.nanoTime();
 
             int res = Integer.MAX_VALUE;
             synchronized (algo) {
-                int startX = nodes.length / 2 - 1;
+                int startX = nodes.length / 2;
                 for (int i = 0; i < nodes[0].length; i++) {
-                    // pathPlan2.cleanDistanceMap();
-                    // pathPlan2.initPathPlanning(nodes);
+                    pathPlan2.cleanDistanceMap();
+                    pathPlan2.initPathPlanning(nodes);
                     int cost = pathPlan2.bfs(nodes, startX, i, nodes.length - 1, nodes[0].length - 1).cost;
                     res = Math.min(res, cost + costParser[i]);
                 }
