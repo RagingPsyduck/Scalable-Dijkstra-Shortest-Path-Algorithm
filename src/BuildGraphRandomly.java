@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Random;
 
 public class BuildGraphRandomly {
@@ -42,7 +41,9 @@ public class BuildGraphRandomly {
         }
         // Create 4 ports in the mid
         Util util = new Util();
-        util.createPorts(nodes,nodes.length/2);
+        util.createPorts(nodes, nodes.length / 4);
+        util.createPorts(nodes, nodes.length / 2);
+        util.createPorts(nodes, nodes.length / 4 * 3);
 
         return nodes;
     }
