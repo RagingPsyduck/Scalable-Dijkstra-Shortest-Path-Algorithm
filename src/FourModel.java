@@ -29,31 +29,33 @@ public class FourModel {
             long endTime = System.nanoTime();
             long totalTime = endTime - startTime;
 
-            System.out.println("Process one Time " + totalTime / 1000);
+            System.out.println("Process 1 Time " + totalTime / 1000);
             DijkstraAlgorithm pathPlan2 = new DijkstraAlgorithm();
             pathPlan2.initPathPlanning(nodes);
             startTime = System.nanoTime();
             long totalCleanUpTime = 0;
             Arrays.fill(costParser2, Integer.MAX_VALUE);
             synchronized (pathPlan1) {
+                pathPlan2.cleanDistanceMap();
+                pathPlan2.initPathPlanning(nodes);
                 costParserHelper(nodes, costParser, costParser2, pathPlan2, nodes.length / 4, nodes.length / 2);
             }
             endTime = System.nanoTime();
             totalTime = endTime - startTime - totalCleanUpTime;
-            System.out.println("Process Two Time " + totalTime / 1000);
-
-
-
+            System.out.println("Process 2 Time " + totalTime / 1000);
+            
             DijkstraAlgorithm pathPlan3 = new DijkstraAlgorithm();
             pathPlan3.initPathPlanning(nodes);
             startTime = System.nanoTime();
             totalCleanUpTime = 0;
             synchronized (pathPlan1) {
+                pathPlan3.cleanDistanceMap();
+                pathPlan3.initPathPlanning(nodes);
                 costParserHelper(nodes, costParser2, costParser3, pathPlan3, nodes.length / 2, nodes.length / 4 * 3);
             }
             endTime = System.nanoTime();
             totalTime = endTime - startTime - totalCleanUpTime;
-            System.out.println("Process Three Time " + totalTime / 1000);
+            System.out.println("Process 3 Time " + totalTime / 1000);
 
             DijkstraAlgorithm pathPlan4 = new DijkstraAlgorithm();
             pathPlan4.initPathPlanning(nodes);
@@ -74,7 +76,7 @@ public class FourModel {
 
             endTime = System.nanoTime();
             totalTime = endTime - startTime - totalCleanUpTime;
-            System.out.println("Process four Time " + totalTime / 1000 + " cost " + res);
+            System.out.println("Process 4 Time " + totalTime / 1000 + " cost " + res);
         }
     }
 
