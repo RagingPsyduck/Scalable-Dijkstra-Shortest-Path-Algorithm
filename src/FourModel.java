@@ -43,7 +43,7 @@ public class FourModel {
             endTime = System.nanoTime();
             totalTime = endTime - startTime - totalCleanUpTime;
             System.out.println("Process 2 Time " + totalTime / 1000);
-            
+
             DijkstraAlgorithm pathPlan3 = new DijkstraAlgorithm();
             pathPlan3.initPathPlanning(nodes);
             startTime = System.nanoTime();
