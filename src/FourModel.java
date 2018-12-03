@@ -69,7 +69,7 @@ public class FourModel {
                 for (int i = 0; i < costParser.length; i++) {
                     pathPlan4.cleanDistanceMap();
                     pathPlan4.initPathPlanning(nodes);
-                    int cost = pathPlan2.bfs(nodes, nodes.length / 4 * 3, i, nodes.length - 1, nodes[0].length - 1).cost;
+                    int cost = pathPlan4.bfs(nodes, nodes.length / 4 * 3, i, nodes.length - 1, nodes[0].length - 1).cost;
                     res = Math.min(res, cost + costParser3[i]);
                 }
             }
