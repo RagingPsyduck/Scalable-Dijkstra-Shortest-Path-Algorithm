@@ -47,5 +47,4 @@ public class BuildGraphRandomly {
 
         return nodes;
     }
-
 }

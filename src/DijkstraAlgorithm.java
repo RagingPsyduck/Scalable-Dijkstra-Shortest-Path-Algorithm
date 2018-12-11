@@ -8,19 +8,6 @@ public class DijkstraAlgorithm extends Thread {
     int row;
     int col;
 
-//    public List<String> generateShortestPath(Node[][] nodes, int startRow, int endRow) {
-//        List<String> res = new ArrayList<>();
-//        row = nodes.length;
-//        col = nodes[0].length;
-//        return res;
-//    }
-//
-//    public class NodeComparator implements Comparator<Node> {
-//        @Override
-//        public int compare(Node node1, Node node2) {
-//            return distMap.get(node1) - distMap.get(node2);
-//        }
-//    };
 
     public void initPathPlanning(Node[][] nodes) {
         row = nodes.length;

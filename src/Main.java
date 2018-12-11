@@ -15,6 +15,3 @@ public class Main {
         fourModel.generatePath(nodes);
     }
 }
-
-
-
