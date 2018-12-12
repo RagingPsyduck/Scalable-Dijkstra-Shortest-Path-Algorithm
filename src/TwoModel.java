@@ -1,4 +1,4 @@
-public class TwoModel extends Thread{
+public class TwoModel extends Thread {
     public void generatePath(Node[][] nodes) {
         System.out.println("--------------------------");
         Util util = new Util();
