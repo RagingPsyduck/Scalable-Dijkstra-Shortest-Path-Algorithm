@@ -28,10 +28,11 @@ public class TwoModel extends Thread {
 
         DijkstraAlgorithm pathPlan2 = new DijkstraAlgorithm();
         pathPlan2.initPathPlanning(nodes);
+        pathPlan2.start();
         startTime = System.nanoTime();
         long totalCleanUpTime = 0;
         int res = Integer.MAX_VALUE;
-        synchronized (pathPlan1) {
+        synchronized (pathPlan2) {
             int startX = nodes.length / 2;
             for (int i = 0; i < costParser.length; i++) {
                 //long  tempStartTime = System.nanoTime();
